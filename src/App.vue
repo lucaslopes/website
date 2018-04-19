@@ -12,7 +12,11 @@
       </a>
     </li>
   </ul>
+  <router-link :to="this.$route.path == '/projects' ? '/' : '/projects'">
+    <button type="button" name="change" class="change"></button>
+  </router-link>
 
+  <router-view></router-view>
 </div>
 </template>
 
