@@ -8,6 +8,18 @@
 
 <script>
 import Social from '../shared/social/Social.vue'
+import { contacts } from '../../assets/contacts.js'
+
+export default {
+  name: 'app',
+
   components: {
     social: Social
   },
+
+  data() {
+    return {
+      networks: contacts
+    }
+  }
+}
