@@ -2,7 +2,12 @@
 <div id="app">
 
   <router-link :to="this.$route.path == '/projects' ? '/' : '/projects'">
-    <button type="button" name="change" class="change"></button>
+    <button
+      type="button" name="change" class="change"
+      :style="this.$route.path == '/projects' ?
+      'background-color: rgb(51, 51, 51)' :
+      'background-color: rgb(255, 255, 255)'">
+    </button>
   </router-link>
 
   <router-view></router-view>
