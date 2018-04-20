@@ -1,5 +1,4 @@
 <template lang="html">
-  <h1>Foi!</h1>
   <ul>
     <li v-for="project in projects">
       <panel class="painel" :image="project.image" :name="project.name" :demo="project.demo" :info="project.info" :code="project.code"></panel>
@@ -26,7 +25,27 @@ export default {
 </script>
 
 <style scoped>
-.change {
-  background-color: rgb(51, 51, 51);
+html {
+  background-color: rgb(255, 255, 255);
+  margin: 0;
+  padding: 0;
+}
+
+.painel {
+  max-width: 500px;
+}
+
+ul {
+  position: absolute;
+  margin: 0 auto;
+  right: 50%;
+  height: 100%;
+}
+
+ul li {
+  list-style: none;
+  display: flex;
+  margin: 15pt;
+  justify-content: center;
 }
 </style>
