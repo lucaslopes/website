@@ -25,11 +25,9 @@ export default {
 }
 </script>
 
-<style>
-* {
+<style scoped>
+html {
   background-color: rgb(51, 51, 51);
-  margin: 0;
-  padding: 0;
   overflow-y: hidden;
   overflow-x: hidden;
 }
@@ -48,16 +46,5 @@ export default {
   margin: 15pt;
   display: inline-block;
   justify-content: center;
-}
-
-.inline svg {
-  width: 50pt;
-  height: 50pt;
-  fill: rgb(255, 255, 255);
-  cursor: pointer;
-}
-
-.change {
-  background-color: rgb(255, 255, 255);
 }
 </style>

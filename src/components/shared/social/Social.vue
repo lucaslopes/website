@@ -15,4 +15,12 @@ export default {
 </script>
 
 <style scoped>
+
+svg {
+  width: 50pt;
+  height: 50pt;
+  fill: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
 </style>
