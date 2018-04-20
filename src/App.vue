@@ -20,12 +20,21 @@ export default {
 }
 </script>
 
-<style scoped>
-.change {
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+
+button {
   position: fixed;
   width: 50pt;
   height: 50pt;
-  right: 10px;
-  bottom: 10px
+  right: 25px;
+  bottom: 25px;
+  border-radius: 50px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+  outline: 0;
 }
 </style>
