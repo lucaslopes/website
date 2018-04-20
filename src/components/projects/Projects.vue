@@ -3,7 +3,17 @@
 </template>
 
 <script>
+import ProjectPanel from '../shared/project-panel/ProjectPanel.vue'
+import { projects } from '../../assets/projects.js'
+
 export default {
+
+  data() {
+    return {
+      projects
+    }
+  }
+
 }
 </script>
 
