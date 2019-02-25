@@ -17,10 +17,10 @@ function preload() {
 
   social = [
     ['#AD35AF', instagram, 'https://instagram.com/lucaslopesf'],
-    ['#3C5999', facebook,  'https://fb.com/lucaslopesf2'],
+    ['#3C5999', facebook,  'https://fb.com/lucaslopes42'],
     ['#0274B3', linkedin,  'https://linkedin.com/in/lucaslopesf'],
     ['#189CDE', telegram,  'https://t.me/lucaslopesf'],
-    ['#2AA9E0', twitter,   'https://twitter.com/lucaslopesf2'],
+    ['#2AA9E0', twitter,   'https://twitter.com/lucaslopes37'],
     ['#DC2A26', youtube,   'https://youtube.com/lucaslopesf2'],
     ['#1DB854', spotify,   'https://open.spotify.com/user/12146452710'],
     ['#1b1f23', github,    'https://github.com/lucaslopes'],
