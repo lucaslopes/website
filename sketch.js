@@ -39,7 +39,7 @@ function preload() {
 }
 
 function setup() {
-  let logo = document.getElementById("logo")
+  let logo = document.getElementById("logo");
   logo.parentNode.removeChild(logo);
   resize();
   createCanvas(x, y);
