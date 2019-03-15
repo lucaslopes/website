@@ -68,9 +68,9 @@ function show(s) {
   image(s[1], w * s[3] + w / 2, h * s[4] + h / 2, side, side);
 }
 
-function copying(s, string = 'lucaslopesf2@gmail.com') {
+function copying(s, str = 'luc' + 'aslop' + 'esf2@g' + 'mai' + 'l.c' + 'om') {
   const el = document.createElement('textarea');
-  el.value = string;
+  el.value = str;
   document.body.appendChild(el);
   el.select();
   document.execCommand('copy');
