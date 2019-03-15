@@ -1,2 +1,2 @@
-# website
-The host of my personal website
+# Lucas Lopes' website
+> Made with p5.js
