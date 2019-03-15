@@ -1,4 +1,4 @@
-<svg id="Agrupar_2_copiar_2" data-name="Agrupar 2 copiar 2" xmlns="http://www.w3.org/2000/svg" width="436" height="568" viewBox="0 0 436 568">
+<svg id="formas" xmlns="http://www.w3.org/2000/svg" width="452" height="570" viewBox="0 0 452 570">
   <metadata><?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
 <x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.6-c138 79.159824, 2016/09/14-01:09:01        ">
    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -30,26 +30,18 @@
 <defs>
     <style>
       .cls-1 {
-        fill: #3dbde4;
+        fill: #34bce6;
+      }
+
+      .cls-1, .cls-2 {
+        fill-rule: evenodd;
       }
 
       .cls-2 {
-        fill: #f6cf48;
+        fill: #f7d037;
       }
     </style>
   </defs>
-  <g id="Agrupar_1" data-name="Agrupar 1">
-    <rect id="Retângulo_1_copiar" data-name="Retângulo 1 copiar" class="cls-1" x="142" y="426" width="142" height="142"/>
-    <rect id="Retângulo_1_copiar_2" data-name="Retângulo 1 copiar 2" class="cls-1" y="426" width="142" height="142"/>
-    <rect id="Retângulo_1_copiar_3" data-name="Retângulo 1 copiar 3" class="cls-1" y="284" width="142" height="142"/>
-    <rect id="Retângulo_1_copiar_4" data-name="Retângulo 1 copiar 4" class="cls-1" y="142" width="142" height="142"/>
-    <rect id="Retângulo_1" data-name="Retângulo 1" class="cls-1" width="142" height="142"/>
-  </g>
-  <g id="Agrupar_1_copiar" data-name="Agrupar 1 copiar">
-    <rect id="Retângulo_1_copiar-2" data-name="Retângulo 1 copiar" class="cls-2" x="152" width="142" height="142"/>
-    <rect id="Retângulo_1_copiar_2-2" data-name="Retângulo 1 copiar 2" class="cls-2" x="294" width="142" height="142"/>
-    <rect id="Retângulo_1_copiar_3-2" data-name="Retângulo 1 copiar 3" class="cls-2" x="294" y="142" width="142" height="142"/>
-    <rect id="Retângulo_1_copiar_4-2" data-name="Retângulo 1 copiar 4" class="cls-2" x="294" y="284" width="142" height="142"/>
-    <rect id="Retângulo_1-2" data-name="Retângulo 1" class="cls-2" x="294" y="426" width="142" height="142"/>
-  </g>
+  <path id="cian" class="cls-1" d="M285,570H0V0H142.5V427.5H285V570"/>
+  <path id="yellow" class="cls-2" d="M167,0H452V570H309.5V142.5H167V0"/>
 </svg>
