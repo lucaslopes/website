@@ -1,2 +1,2 @@
 # Lucas Lopes' website
-> Made with p5.js
+> It could have been done with just HTML/CSS but the goal here is to make with p5.js
