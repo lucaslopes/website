@@ -1,2 +1,2 @@
 # Lucas Lopes' website
-> It could have been done with just HTML/CSS but the goal here is to make with p5.js
+> This version uses only HTMl, CSS and JS (with jQuery).
