@@ -54,8 +54,8 @@ if (Cookies.get('visited') != 'true') {
 
   logo.css({width: '50%', height: '50%'});
 
-  logo.delay(500).animate({width: '100%', height: '100%'}, 2000, $.easeInQuad);
-  intro.delay(1000).fadeOut(1250);
+  logo.delay(250).animate({width: '100%', height: '100%'}, 1000, $.easeInQuad);
+  intro.delay(250).fadeOut(1500);
 
   $('body').append(intro);
 
