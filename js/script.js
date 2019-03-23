@@ -14,15 +14,15 @@ let social = [
 ];
 
 let table;
-function fillTable() {
-  let rows = 4;
-  social = shuffle(social);
+function fillTable(cols, randomize) {
+  if (randomize)
+    social = shuffle(social);
 
   $('.social').remove();
   table = $('<table>').addClass('social');
 
   for (let [i, s] of social.entries()) {
-    if (i%Math.floor(social.length/rows) == 0)
+    if (i%cols == 0)
       table.append($('<tr>'));
 
     let lastRow = table.find('tr').last();
@@ -39,14 +39,16 @@ function fillTable() {
       cell.click(function() {
         copy(s.url);
 
-        message.animate(
-          {top: $(document).height()-message.height()
-          }, 250, $.easeInQuad).delay(2500).animate({
-            top: '100%'
+        message.css('visibility', 'visible').animate({
+          bottom: 0
+        }, 250, $.easeInQuad, function() {
+          message.delay(2500).animate({
+            bottom: -message.height()
           }, 250, $.easeInQuad, function() {
-            message.finish();
+            message.css('visibility', 'hidden').finish();
           });
-        });
+        })
+      });
     }
     else {
       link.append(image);
@@ -56,12 +58,12 @@ function fillTable() {
     lastRow.append(cell);
   }
 }
-fillTable();
+fillTable(getCols(), true);
 
 let shake = new Shake();
 shake.start();
 $(window).on('shake', function() {
-  fillTable();
+  fillTable(getCols(), true);
   $('body').append(table);
 });
 
@@ -91,6 +93,17 @@ $(function() {
   $('body').append(intro);
   $('body').append(message);
 })
+
+$(window).resize(function() {
+  fillTable(getCols(), false);
+  $('body').append(table);
+})
+
+function getCols() {
+  let possibilities = [3, 4, 6];
+  let ratio = $(window).width()/3840;
+  return possibilities[Math.floor(ratio*possibilities.length)]
+}
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
