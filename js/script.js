@@ -13,36 +13,48 @@ let social = [
 {color: '#F6F6F6', img: 'imgs/email.png',     url: 'email', email: 'lucaslopesf2@gmail.com'}
 ];
 
-let rows = 4;
-social = shuffle(social);
+function createTable() {
+  let rows = 4;
+  social = shuffle(social);
 
-let table = $('<table>').addClass('social');
-for (let [i, s] of social.entries()) {
-  if (i%Math.floor(social.length/rows) == 0)
-    table.append($('<tr>'));
+  let table = $('<table>').addClass('social');
 
-  let lastRow = table.find('tr').last();
+  for (let [i, s] of social.entries()) {
+    if (i%Math.floor(social.length/rows) == 0)
+      table.append($('<tr>'));
 
-  let cell = $('<td>').addClass('top').css('background-color', s.color);
-  let image = $('<img>').addClass('logos inside-link').attr('src', s.img);
-  let link = $('<a>').addClass('links').attr({href: s.url, target: '_blank'});
+    let lastRow = table.find('tr').last();
 
-  if (s.url == 'email') {
-    image.removeClass('inside-link')
-    cell.append(image).removeClass('top').addClass('center');
+    let cell = $('<td>').addClass('top').css('background-color', s.color);
+    let image = $('<img>').addClass('logos inside-link').attr('src', s.img);
+    let link = $('<a>').addClass('links').attr({href: s.url, target: '_blank'});
 
-    cell.css('cursor', 'pointer');
-    cell.click(function() {
-      copy(s.url);
-    });
+    if (s.url == 'email') {
+      image.removeClass('inside-link')
+      cell.append(image).removeClass('top').addClass('center');
+
+      cell.css('cursor', 'pointer');
+      cell.click(function() {
+        copy(s.url);
+
+        message.animate(
+          {top: $(document).height()-message.height()
+          }, 250, $.easeInQuad).delay(2500).animate({
+            top: '100%'
+          }, 250, $.easeInQuad, function() {
+            message.finish();
+          });
+        });
+    }
+    else {
+      link.append(image);
+      cell.append(link);
+    }
+
+    lastRow.append(cell);
   }
-  else {
-    link.append(image);
-    cell.append(link);
-  }
-
-  lastRow.append(cell);
 }
+createTable();
 
 let intro;
 
@@ -62,9 +74,13 @@ if (Cookies.get('visited') != 'true') {
   Cookies.set('visited', 'true');
 }
 
+let message = $('<div>').addClass('message');
+message.html('E-mail address copied to clipboard');
+
 $(function() {
   $('body').append(table);
   $('body').append(intro);
+  $('body').append(message);
 })
 
 function shuffle(array) {
