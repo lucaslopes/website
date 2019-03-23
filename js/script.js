@@ -37,7 +37,7 @@ function fillTable(cols, randomize) {
 
       cell.css('cursor', 'pointer');
       cell.click(function() {
-        copy(s.url);
+        copy(s.email);
 
         message.css('visibility', 'visible').animate({
           bottom: 0
