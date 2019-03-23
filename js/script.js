@@ -13,11 +13,13 @@ let social = [
 {color: '#F6F6F6', img: 'imgs/email.png',     url: 'email', email: 'lucaslopesf2@gmail.com'}
 ];
 
-function createTable() {
+let table;
+function fillTable() {
   let rows = 4;
   social = shuffle(social);
 
-  let table = $('<table>').addClass('social');
+  $('.social').remove();
+  table = $('<table>').addClass('social');
 
   for (let [i, s] of social.entries()) {
     if (i%Math.floor(social.length/rows) == 0)
@@ -54,7 +56,14 @@ function createTable() {
     lastRow.append(cell);
   }
 }
-createTable();
+fillTable();
+
+let shake = new Shake();
+shake.start();
+$(window).on('shake', function() {
+  fillTable();
+  $('body').append(table);
+});
 
 let intro;
 
@@ -85,7 +94,7 @@ $(function() {
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(Math.random()*(i+1));
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
