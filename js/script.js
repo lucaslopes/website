@@ -100,9 +100,10 @@ $(window).resize(function() {
 })
 
 function getCols() {
-  let possibilities = [3, 4, 6];
-  let ratio = $(window).width()/3840;
-  return possibilities[Math.floor(ratio*possibilities.length)]
+  let possibilities = [2, 3, 4, 6];
+  let ratio = $(window).width()/$(window).height();
+  let index = Math.min(Math.floor(ratio/3*possibilities.length), possibilities.length-1);
+  return possibilities[index];
 }
 
 function shuffle(array) {
