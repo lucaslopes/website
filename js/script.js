@@ -64,7 +64,7 @@ let shake = new Shake();
 shake.start();
 $(window).on('shake', function() {
   fillTable(getCols(), true);
-  $('body').append(table);
+  $('body').prepend(table);
 });
 
 let intro;
@@ -96,7 +96,7 @@ $(function() {
 
 $(window).resize(function() {
   fillTable(getCols(), false);
-  $('body').append(table);
+  $('body').prepend(table);
 })
 
 function getCols() {
