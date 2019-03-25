@@ -48,16 +48,15 @@ body {
 }
 
 .logos {
-  width: 40%;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  max-width: 25%;
+  max-height: 25%;
 }
 
 .inside-link {
   position: relative;
   left: 50%;
   top: 50%;
-  transform: translateX(-50%) translateY(calc(-50% - 30px));
+  transform: translateX(-50%) translateY(-50%);
 }
 
 .links {
