@@ -27,7 +27,7 @@ function fillTable(cols, randomize) {
 
     let lastRow = table.find('tr').last();
 
-    let cell = $('<td>').adlass('top').css('background-color', s.color);
+    let cell = $('<td>').addClass('top').css('background-color', s.color);
     let image = $('<img>').addClass('logos inside-link').attr('src', s.img);
     let link = $('<a>').addClass('links').attr({href: s.url, target: '_blank'});
 
