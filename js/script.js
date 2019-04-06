@@ -41,10 +41,10 @@ function fillTable(cols, randomize) {
 
 				message.css('visibility', 'visible').animate({
 					bottom: 0
-				}, 250, $.easeInQuad, function() {
+				}, 250, 'easeInQuad', function() {
 					message.delay(2500).animate({
 						bottom: -message.height()
-					}, 250, $.easeInQuad, function() {
+					}, 250, 'easeInQuad', function() {
 						message.css('visibility', 'hidden').finish();
 					});
 				})
@@ -71,16 +71,54 @@ let intro;
 
 if (Cookies.get('visited') != 'true') {
 	intro = $('<div>').addClass('intro');
-	let logo = $('<img>').attr('src', './imgs/logo.png');
+
+	let logo = $('<img>').addClass('logo').attr('src', './imgs/logo.png');
+	let title = $('<span>').addClass('title').html('<span>L U C A S L O P E S</span>').append(
+		$('<span>').css({width: '100%', height: '1em', display: 'inline-block'}));
+
+	if ($(window).width() > $(window).height())
+		logo.height('50%');
+	else
+		logo.width('50%');
 
 	intro.append(logo);
+	intro.append(title);
 
-	logo.css({width: '50%', height: '50%'});
+	logo.delay(500).animate({deg: 180}, {
+		duration: 750,
+		easing: 'easeInOutBack',
+		step: function(now) {
+			logo.css('transform', 'rotate('+now+'deg)')
+		}
+	}, 1500).delay(50).animate({deg: 360}, {
+		duration: 750,
+		easing: 'easeInOutBack',
+		step: function(now) {
+			logo.css('transform', 'rotate('+now+'deg)')
+		}
+	}, 1500, 'easeInOutBack').delay(500).queue(function(next) {
+		title.css({opacity: '100'}).animate({percentage: 100}, {
+			duration: 500,
+			step: function(now) {
+				title.css({transform: 'translateY('+(now/100*150-100)+'%)'})
+			}
+		}).delay(1500).queue(function(next) {
 
-	logo.delay(250).animate({width: '100%', height: '100%'}, 1000, $.easeInQuad);
-	intro.delay(250).fadeOut(1500);
+			logo.animate({percentage: 100}, {
+				duration: 1500, 
+				easing: 'easeInQuad',
+				step: function(now) {
+					logo.css($(window).width() > $(window).height() ? {width: 'auto', height: (50+now)+'%'} : {width: (50+now)+'%', height: 'auto'})
+				}
+			});
 
-	$('body').append(intro);
+			intro.delay(100).fadeOut(1200)
+
+			next();
+		});
+
+		next();
+	});
 
 	Cookies.set('visited', 'true');
 }
@@ -92,15 +130,27 @@ $(function() {
 	$('body').append(table);
 	$('body').append(intro);
 	$('body').append(message);
+
+	$('.logo').on('load', function(){
+		$('.title').width($('.logo').width());
+	});
 })
 
 $(window).resize(function() {
 	fillTable(getCols(), false);
 	$('body').prepend(table);
+
+	let logo = $('.intro > img');
+	if ($(window).width() > $(window).height())
+		logo.css({width: 'auto', height: '50%'});
+	else
+		logo.css({width: '50%', height: 'auto'});
+
+	$('.title').width($('.logo').width());
 })
 
 function getCols() {
-	let possibilities = [1, 2, 3, 4, 6, 12];
+	let possibilities = [2, 3, 4, 6, 12];
 	let ratio = $(window).width()/$(window).height();
 	let index = Math.min(Math.floor(ratio/3*possibilities.length), possibilities.length-1);
 	return possibilities[index];
