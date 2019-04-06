@@ -39,6 +39,10 @@ body {
   height: 100%;
 }
 
+.social > tr > td {
+	max-height: 20px;
+}
+
 .top {
   vertical-align: top;
 }
@@ -48,8 +52,8 @@ body {
 }
 
 .logos {
-  max-width: 25%;
-  max-height: 25%;
+  max-width: 30%;
+  max-height: 30%;
 }
 
 .inside-link {
