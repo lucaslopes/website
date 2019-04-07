@@ -84,20 +84,10 @@ if (Cookies.get('visited') != 'true') {
 	intro.append(logo);
 	intro.append(title);
 
-	logo.delay(500).animate({deg: 180}, {
-		duration: 750,
-		easing: 'easeInOutBack',
-		step: function(now) {
-			logo.css('transform', 'rotate('+now+'deg)')
-		}
-	}, 1500).delay(50).animate({deg: 360}, {
-		duration: 750,
-		easing: 'easeInOutBack',
-		step: function(now) {
-			logo.css('transform', 'rotate('+now+'deg)')
-		}
-	}, 1500, 'easeInOutBack').delay(500).queue(function(next) {
-		title.css({opacity: '100'}).animate({percentage: 100}, {
+	title.delay(750).queue(function(next) {
+		title.find('span').css({opacity: '100'});
+
+		title.animate({percentage: 100}, {
 			duration: 500,
 			step: function(now) {
 				title.css({transform: 'translateY('+(now/100*150-100)+'%)'})

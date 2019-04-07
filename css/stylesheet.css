@@ -34,8 +34,6 @@ body {
 }
 
 .title {
-  opacity: 0;
-
   text-align: justify;
 
   font-family: sans-serif;
@@ -46,9 +44,12 @@ body {
 
 .title > span {
   font-size: 1.5em;
+  
   background: linear-gradient(to bottom right, #000000, #FFFFFF);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+
+  opacity: 0;
 }
 
 .social {
