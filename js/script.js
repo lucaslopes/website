@@ -84,15 +84,17 @@ if (Cookies.get('visited') != 'true') {
 	intro.append(logo);
 	intro.append(title);
 
-	title.delay(750).queue(function(next) {
-		title.find('span').css({opacity: '100'});
+	title.delay(1000).queue(function(next) {
+		title.find('span').css({opacity: 100});
 
 		title.animate({percentage: 100}, {
 			duration: 500,
+			easing: 'easeOutCirc',
 			step: function(now) {
 				title.css({transform: 'translateY('+(now/100*150-100)+'%)'})
 			}
 		}).delay(1500).queue(function(next) {
+			title.animate({opacity: 0}, 750)
 
 			logo.animate({percentage: 100}, {
 				duration: 1500, 
@@ -122,7 +124,10 @@ $(function() {
 	$('body').append(message);
 
 	$('.logo').on('load', function(){
-		$('.title').width($('.logo').width());
+		let title = $('.title');
+		let logo = $(this);
+		title.width(logo.width());
+		title.css('font-size', logo.width()/title.find('span').html().length+'px');
 	});
 })
 
@@ -130,13 +135,15 @@ $(window).resize(function() {
 	fillTable(getCols(), false);
 	$('body').prepend(table);
 
-	let logo = $('.intro > img');
+	let logo = $('.logo');
 	if ($(window).width() > $(window).height())
 		logo.css({width: 'auto', height: '50%'});
 	else
 		logo.css({width: '50%', height: 'auto'});
 
-	$('.title').width($('.logo').width());
+	let title = $('.title');
+	title.width(logo.width());
+	title.css('font-size', logo.width()/title.find('span').html().length+'px');
 })
 
 function getCols() {
