@@ -67,83 +67,17 @@ $(window).on('shake', function() {
 	$('body').prepend(table);
 });
 
-let intro;
-
-if (Cookies.get('visited') != 'true') {
-	intro = $('<div>').addClass('intro');
-
-	let logo = $('<img>').addClass('logo').attr('src', './imgs/logo.png');
-	let title = $('<span>').addClass('title').html('<span>L U C A S L O P E S</span>').append(
-		$('<span>').css({width: '100%', height: '1em', display: 'inline-block'}));
-
-	if ($(window).width() > $(window).height())
-		logo.height('50%');
-	else
-		logo.width('50%');
-
-	intro.append(logo);
-	intro.append(title);
-
-	title.delay(1000).queue(function(next) {
-		title.find('span').css({opacity: 100});
-
-		title.animate({percentage: 100}, {
-			duration: 500,
-			easing: 'easeOutCirc',
-			step: function(now) {
-				title.css({transform: 'translateY('+(now/100*150-100)+'%)'})
-			}
-		}).delay(1500).queue(function(next) {
-			title.animate({opacity: 0}, 750)
-
-			logo.animate({percentage: 100}, {
-				duration: 1500, 
-				easing: 'easeInQuad',
-				step: function(now) {
-					logo.css($(window).width() > $(window).height() ? {width: 'auto', height: (50+now)+'%'} : {width: (50+now)+'%', height: 'auto'})
-				}
-			});
-
-			intro.delay(100).fadeOut(1200)
-
-			next();
-		});
-
-		next();
-	});
-
-	Cookies.set('visited', 'true');
-}
-
 let message = $('<div>').addClass('message');
 message.html('E-mail address copied to clipboard');
 
 $(function() {
 	$('body').append(table);
-	$('body').append(intro);
 	$('body').append(message);
-
-	$('.logo').on('load', function(){
-		let title = $('.title');
-		let logo = $(this);
-		title.width(logo.width());
-		title.css('font-size', logo.width()/title.find('span').html().length+'px');
-	});
 })
 
 $(window).resize(function() {
 	fillTable(getCols(), false);
 	$('body').prepend(table);
-
-	let logo = $('.logo');
-	if ($(window).width() > $(window).height())
-		logo.css({width: 'auto', height: '50%'});
-	else
-		logo.css({width: '50%', height: 'auto'});
-
-	let title = $('.title');
-	title.width(logo.width());
-	title.css('font-size', logo.width()/title.find('span').html().length+'px');
 })
 
 function getCols() {
