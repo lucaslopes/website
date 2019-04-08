@@ -15,125 +15,106 @@ let social = [
 
 let table;
 function fillTable(cols, randomize) {
-  if (randomize)
-    social = shuffle(social);
+	if (randomize)
+		social = shuffle(social);
 
-  $('.social').remove();
-  table = $('<table>').addClass('social');
+	$('.social').remove();
+	table = $('<table>').addClass('social');
 
-  for (let [i, s] of social.entries()) {
-    if (i%cols == 0)
-      table.append($('<tr>'));
+	for (let [i, s] of social.entries()) {
+		if (i%cols == 0)
+			table.append($('<tr>'));
 
-    let lastRow = table.find('tr').last();
+		let lastRow = table.find('tr').last();
 
-    let cell = $('<td>').addClass('top').css('background-color', s.color);
-    let image = $('<img>').addClass('logos inside-link').attr('src', s.img);
-    let link = $('<a>').addClass('links').attr({href: s.url, target: '_blank'});
+		let cell = $('<td>').addClass('top').css('background-color', s.color);
+		let image = $('<img>').addClass('logos inside-link').attr('src', s.img);
+		let link = $('<a>').addClass('links').attr({href: s.url, target: '_blank'});
 
-    if (s.url == 'email') {
-      image.removeClass('inside-link');
-      cell.append(image).removeClass('top').addClass('center');
+		if (s.url == 'email') {
+			image.removeClass('inside-link');
+			cell.append(image).removeClass('top').addClass('center');
 
-      cell.css('cursor', 'pointer');
-      cell.click(function() {
-        copy(s.email);
+			cell.css('cursor', 'pointer');
+			cell.click(function() {
+				copy(s.email);
 
-        message.css('visibility', 'visible').animate({
-          bottom: 0
-        }, 250, $.easeInQuad, function() {
-          message.delay(2500).animate({
-            bottom: -message.height()
-          }, 250, $.easeInQuad, function() {
-            message.css('visibility', 'hidden').finish();
-          });
-        })
-      });
-    }
-    else {
-      link.append(image);
-      cell.append(link);
-    }
+				message.css('visibility', 'visible').animate({
+					bottom: 0
+				}, 250, 'easeInQuad', function() {
+					message.delay(2500).animate({
+						bottom: -message.height()
+					}, 250, 'easeInQuad', function() {
+						message.css('visibility', 'hidden').finish();
+					});
+				})
+			});
+		}
+		else {
+			link.append(image);
+			cell.append(link);
+		}
 
-    lastRow.append(cell);
-  }
+		lastRow.append(cell);
+	}
 }
 fillTable(getCols(), true);
 
 let shake = new Shake();
 shake.start();
 $(window).on('shake', function() {
-  fillTable(getCols(), true);
-  $('body').prepend(table);
+	fillTable(getCols(), true);
+	$('body').prepend(table);
 });
-
-let intro;
-
-if (Cookies.get('visited') != 'true') {
-  intro = $('<div>').addClass('intro');
-  let logo = $('<img>').attr('src', './imgs/logo.svg');
-
-  intro.append(logo);
-
-  logo.css({width: '50%', height: '50%'});
-
-  logo.delay(250).animate({width: '100%', height: '100%'}, 1000, $.easeInQuad);
-  intro.delay(250).fadeOut(1500);
-
-  $('body').append(intro);
-
-  Cookies.set('visited', 'true');
-}
 
 let message = $('<div>').addClass('message');
 message.html('E-mail address copied to clipboard');
 
 $(function() {
-  $('body').append(table);
-  $('body').append(intro);
-  $('body').append(message);
+	$('body').append(table);
+	$('body').append(message);
 })
 
 $(window).resize(function() {
-  fillTable(getCols(), false);
-  $('body').prepend(table);
+	fillTable(getCols(), false);
+	$('body').prepend(table);
 })
 
 function getCols() {
-  let possibilities = [1, 2, 3, 4, 6, 12];
-  let ratio = $(window).width()/$(window).height();
-  let index = Math.min(Math.floor(ratio/3*possibilities.length), possibilities.length-1);
-  return possibilities[index];
+	let possibilities = [2, 3, 4, 6, 12];
+	let ratio = $(window).width()/$(window).height();
+	let index = Math.min(Math.floor(ratio/3*possibilities.length), possibilities.length-1);
+	return possibilities[index];
 }
 
 function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random()*(i+1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
+	for (let i = array.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random()*(i+1));
+		[array[i], array[j]] = [array[j], array[i]];
+	}
+	return array;
 }
 
 function copy(string) {
-  let textarea = $('<textarea>').val(string);
-  $('body').append(textarea);
-  if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
-    var el = textarea.get(0);
-    var editable = el.contentEditable;
-    var readOnly = el.readOnly;
-    el.contentEditable = true;
-    el.readOnly = false;
-    var range = document.createRange();
-    range.selectNodeContents(el);
-    var sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
-    el.setSelectionRange(0, 999999);
-    el.contentEditable = editable;
-    el.readOnly = readOnly;
-  } else {
-    textarea.select();
-  }
-  document.execCommand('copy');
-  textarea.remove();
+	let textarea = $('<textarea>').val(string);
+	$('body').append(textarea);
+	if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+		var el = textarea.get(0);
+		var editable = el.contentEditable;
+		var readOnly = el.readOnly;
+		el.contentEditable = true;
+		el.readOnly = false;
+		var range = document.createRange();
+		range.selectNodeContents(el);
+		var sel = window.getSelection();
+		sel.removeAllRanges();
+		sel.addRange(range);
+		el.setSelectionRange(0, 999999);
+		el.contentEditable = editable;
+		el.readOnly = readOnly;
+	} else {
+		textarea.select();
+	}
+	document.execCommand('copy');
+	textarea.remove();
 }
