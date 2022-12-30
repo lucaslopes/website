@@ -81,7 +81,7 @@ $(window).resize(function() {
 })
 
 function getCols() {
-	let possibilities = [2, 3, 4, 6];
+	let possibilities = [2, 3, 6];
 	let ratio = $(window).width()/$(window).height();
 	let index = Math.min(Math.floor(ratio/3*possibilities.length), possibilities.length-1);
 	return possibilities[index];
