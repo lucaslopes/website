@@ -4,7 +4,7 @@
 
 ### Poster
 
-[![SRC Poster](https://lucaslopes.me/pdfs/src-llf.pdf)](https://lucaslopes.me/pdfs/src-llf.pdf)
+[![SRC Poster](https://lucaslopes.me/pdfs/src.pdf)](https://lucaslopes.me/pdfs/src.pdf)
 
 ## MAMA
 
