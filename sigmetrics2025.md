@@ -16,3 +16,8 @@
 
 ### Video Presentation
 [![YouTube Video](https://img.youtube.com/vi/pJjY6SD_wxw/0.jpg)](https://youtu.be/pJjY6SD_wxw)
+
+# Physica A journal
+
+## Paper under review
+[Peer review status](https://track.authorhub.elsevier.com/?uuid=e7624ee8-7215-4199-9991-666e28dc45bf)
