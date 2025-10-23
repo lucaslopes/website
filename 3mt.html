@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,8 @@
     <!-- Include p5.js and the Matter.js physics engine -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -68,13 +71,13 @@
         /* New Custom Tooltip Style */
         .tooltip {
             position: fixed;
-            padding: 8px 12px;
+            padding: 20px 24px;
             background-color: #111827; /* gray-900 */
             color: #d1d5db; /* gray-300 */
-            border-radius: 6px;
+            border-radius: 8px;
             border: 1px solid #374151; /* gray-700 */
-            font-size: 0.875rem;
-            line-height: 1.25rem;
+            font-size: 1.125rem;
+            line-height: 1.6rem;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.2s;
@@ -116,15 +119,15 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-3">
-                         <div class="flex items-center space-x-1.5" data-translate-tooltip="tooltipStrangers">
-                            <span data-translate="strangers" class="font-medium text-red-400 text-sm w-16 cursor-help">Strangers</span>
+                         <div class="flex items-center space-x-1.5" data-translate-tooltip="tooltipFoes">
+                            <span data-translate="foes" class="font-medium text-red-400 text-sm w-16 cursor-help">Foes</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                         </div>
-                        <span id="control-left-strangers-count" class="font-bold text-lg text-red-400 w-8 text-center">0</span>
+                        <span id="control-left-foes-count" class="font-bold text-lg text-red-400 w-8 text-center">0</span>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <button id="remove-left-stranger-btn" class="control-btn bg-gray-700 text-white font-bold rounded-full hover:bg-gray-600 transition">-</button>
-                        <button id="add-left-stranger-btn" class="control-btn bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition">+</button>
+                        <button id="remove-left-foe-btn" class="control-btn bg-gray-700 text-white font-bold rounded-full hover:bg-gray-600 transition">-</button>
+                        <button id="add-left-foe-btn" class="control-btn bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition">+</button>
                     </div>
                 </div>
                 <div class="flex items-center justify-between pt-2 border-t border-gray-700/50">
@@ -166,15 +169,15 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-3">
-                        <div class="flex items-center space-x-1.5" data-translate-tooltip="tooltipStrangers">
-                            <span data-translate="strangers" class="font-medium text-red-400 text-sm w-16 cursor-help">Strangers</span>
+                        <div class="flex items-center space-x-1.5" data-translate-tooltip="tooltipFoes">
+                            <span data-translate="foes" class="font-medium text-red-400 text-sm w-16 cursor-help">Foes</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                         </div>
-                        <span id="control-right-strangers-count" class="font-bold text-lg text-red-400 w-8 text-center">0</span>
+                        <span id="control-right-foes-count" class="font-bold text-lg text-red-400 w-8 text-center">0</span>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <button id="remove-right-stranger-btn" class="control-btn bg-gray-700 text-white font-bold rounded-full hover:bg-gray-600 transition">-</button>
-                        <button id="add-right-stranger-btn" class="control-btn bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition">+</button>
+                        <button id="remove-right-foe-btn" class="control-btn bg-gray-700 text-white font-bold rounded-full hover:bg-gray-600 transition">-</button>
+                        <button id="add-right-foe-btn" class="control-btn bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition">+</button>
                     </div>
                 </div>
                  <div class="flex items-center justify-between pt-2 border-t border-gray-700/50">
@@ -197,21 +200,23 @@
         
         <!-- Resolution & Familiarity Index -->
         <div id="resolution-slider-container" class="mt-8 bg-gray-800 p-4 rounded-lg">
-             <p data-translate="resolution" class="text-lg font-medium text-gray-400 text-center mb-2">Resolution</p>
              <div class="flex justify-between items-center text-sm text-gray-400 mb-3">
                 <div class="flex-1 text-left">
                     <span data-translate="profitPerFriend" class="whitespace-nowrap">Profit per Friend (1-r): </span><span id="profit-value" class="font-bold text-blue-400">0.50</span>
                 </div>
                 <div class="flex-shrink-0">
-                     <button id="magnet-toggle-btn" class="p-1 rounded-full text-gray-500 hover:text-blue-400 hover:bg-gray-700 transition" data-translate-title="magnetTitle">
-                        <svg id="magnet-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                           <path d="M19 20v-5a7 7 0 1 0-14 0v5"></path><path d="M5 20h4"></path><path d="M15 20h4"></path>
-                        </svg>
-                     </button>
+                    <p data-translate="resolution" class="text-lg font-medium text-gray-400 text-center">Resolution</p>
                 </div>
                 <div class="flex-1 text-right">
-                    <span data-translate="costPerStranger" class="whitespace-nowrap ml-4">Cost per Stranger (r): </span><span id="cost-value" class="font-bold text-red-400">0.50</span>
+                    <span data-translate="costPerFoe" class="whitespace-nowrap ml-4">Cost per Foe (r): </span><span id="cost-value" class="font-bold text-red-400">0.50</span>
                 </div>
+            </div>
+            <div class="flex justify-center mb-3">
+                <button id="magnet-toggle-btn" class="p-1 rounded-full text-gray-500 hover:text-blue-400 hover:bg-gray-700 transition" data-translate-title="magnetTitle">
+                    <svg id="magnet-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                       <path d="M19 20v-5a7 7 0 1 0-14 0v5"></path><path d="M5 20h4"></path><path d="M15 20h4"></path>
+                    </svg>
+                </button>
             </div>
             <div class="relative w-full h-6 flex items-center">
                 <!-- Brackets Container -->
@@ -222,6 +227,18 @@
                     <svg id="profit-bracket-svg" class="h-full text-blue-400" preserveAspectRatio="none" viewBox="0 0 100 15">
                          <path d="M0,15 Q50,0 100,15" stroke="currentColor" stroke-width="1.5" fill="none" vector-effect="non-scaling-stroke"></path>
                     </svg>
+                </div>
+                
+                <!-- Arc Labels Container -->
+                <div class="absolute top-[-40px] left-0 w-full h-8 pointer-events-none flex">
+                    <!-- Cost Label (Red Arc) -->
+                    <div id="cost-arc-label" class="absolute top-0 text-xs font-medium text-red-400 bg-gray-900 px-2 py-1 rounded border border-red-400/30 transition-all duration-300">
+                        Cost (r)
+                    </div>
+                    <!-- Profit Label (Blue Arc) -->
+                    <div id="profit-arc-label" class="absolute top-0 text-xs font-medium text-blue-400 bg-gray-900 px-2 py-1 rounded border border-blue-400/30 transition-all duration-300">
+                        Profit (1-r)
+                    </div>
                 </div>
 
                 <input type="range" id="resolution-slider" min="0" max="1" step="0.01" value="0.5">
@@ -263,51 +280,62 @@
     <div id="tooltip" class="tooltip"></div>
 
     <script>
+        // Configure MathJax
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+
         // --- Translation Data ---
         const translations = {
             'en': {
                 title: 'Hedonic Game',
                 subtitle: 'Resolve frustration in community detection',
                 friends: 'Friends',
-                strangers: 'Strangers',
+                foes: 'Foes',
                 weight: 'Weight',
                 resetTitle: 'Reset Scale',
                 resolution: 'Resolution',
                 profitPerFriend: 'Profit per Friend (1-r): ',
-                costPerStranger: 'Cost per Stranger (r): ',
+                costPerFoe: 'Cost per Foe (r): ',
                 magnetTitle: 'Toggle Magnet Mode',
                 familiarityIndex: 'Familiarity Index',
                 tooltipFriends: 'Number of connections in community.',
-                tooltipStrangers: 'Number of non-connections in community.',
-                tooltipWeight: 'The hedonic value in the community. Calculated as: (Friends × Profit) - (Strangers × Cost)',
-                tooltipFamiliarity: 'It\'s like "em cima do muro" when the person cannot decide a side.',
+                tooltipFoes: 'Number of non-connections in community.',
+                tooltipWeight: 'The hedonic value in the community. Calculated as: (Friends × Profit) - (Foes × Cost)',
+                tooltipFamiliarity: '$\\dfrac{\\text{rightFriends} \\, - \\, \\text{leftFriends}}{\\left(\\text{rightFriends} \\, - \\, \\text{leftFriends}\\right) \\, + \\, \\left(\\text{rightFoes} \\, - \\, \\text{leftFoes}\\right)}$',
                 msgReset: 'Scale has been reset.',
                 msgMagnetOn: 'Magnet mode enabled.',
                 msgMagnetOff: 'Magnet mode disabled.',
                 legendAngel: 'Social preference\ntowards more friends',
-                legendDevil: 'Antisocial preference\ntowards fewer strangers'
+                legendDevil: 'Antisocial preference\ntowards fewer foes'
             },
             'pt-BR': {
                 title: 'Jogo Hedônico',
                 subtitle: 'Resolva a frustração na detecção de comunidades',
                 friends: 'Amigos',
-                strangers: 'Estranhos',
+                foes: 'Desafetos',
                 weight: 'Peso',
                 resetTitle: 'Resetar Balança',
                 resolution: 'Resolução',
                 profitPerFriend: 'Lucro por Amigo (1-r): ',
-                costPerStranger: 'Custo por Estranho (r): ',
+                costPerFoe: 'Custo por Desafeto (r): ',
                 magnetTitle: 'Ativar/Desativar Modo Ímã',
                 familiarityIndex: 'Índice de Familiaridade',
                 tooltipFriends: 'Número de conexões na comunidade.',
-                tooltipStrangers: 'Número de não-conexões na comunidade.',
-                tooltipWeight: 'O valor hedônico na comunidade. Calculado como: (Amigos × Lucro) - (Estranhos × Custo)',
-                tooltipFamiliarity: 'É como estar "em cima do muro" quando a pessoa não consegue decidir um lado.',
+                tooltipFoes: 'Número de não-conexões na comunidade.',
+                tooltipWeight: 'O valor hedônico na comunidade. Calculado como: (Amigos × Lucro) - (Desafetos × Custo)',
+                tooltipFamiliarity: '$\\dfrac{\\text{AmigosDireita} \\, - \\, \\text{AmigosEsquerda}}{\\left(\\text{AmigosDireita} \\, - \\, \\text{AmigosEsquerda}\\right) \\, + \\, \\left(\\text{DesafetosDireita} \\, - \\, \\text{DesafetosEsquerda}\\right)}$',
                 msgReset: 'Balança resetada.',
                 msgMagnetOn: 'Modo ímã ativado.',
                 msgMagnetOff: 'Modo ímã desativado.',
                 legendAngel: 'Preferência social\npor mais amigos',
-                legendDevil: 'Preferência antissocial\npor menos estranhos'
+                legendDevil: 'Preferência antissocial\npor menos desafetos'
             }
         };
 
@@ -317,17 +345,17 @@
         let leftTotalWeight = 0;
         let rightTotalWeight = 0;
         let leftFriends = 0;
-        let leftStrangers = 0;
+        let leftFoes = 0;
         let rightFriends = 0;
-        let rightStrangers = 0;
+        let rightFoes = 0;
         let resolution = 0.5;
         let magnetModeEnabled = false;
 
         // Control Count displays
         const controlLeftFriendsEl = document.getElementById('control-left-friends-count');
-        const controlLeftStrangersEl = document.getElementById('control-left-strangers-count');
+        const controlLeftFoesEl = document.getElementById('control-left-foes-count');
         const controlRightFriendsEl = document.getElementById('control-right-friends-count');
-        const controlRightStrangersEl = document.getElementById('control-right-strangers-count');
+        const controlRightFoesEl = document.getElementById('control-right-foes-count');
 
         // Weight displays
         const controlLeftPanWeightEl = document.getElementById('control-left-pan-weight');
@@ -352,13 +380,13 @@
         // Button References
         const addLeftFriendBtn = document.getElementById('add-left-friend-btn');
         const removeLeftFriendBtn = document.getElementById('remove-left-friend-btn');
-        const addLeftStrangerBtn = document.getElementById('add-left-stranger-btn');
-        const removeLeftStrangerBtn = document.getElementById('remove-left-stranger-btn');
+        const addLeftFoeBtn = document.getElementById('add-left-foe-btn');
+        const removeLeftFoeBtn = document.getElementById('remove-left-foe-btn');
         
         const addRightFriendBtn = document.getElementById('add-right-friend-btn');
         const removeRightFriendBtn = document.getElementById('remove-right-friend-btn');
-        const addRightStrangerBtn = document.getElementById('add-right-stranger-btn');
-        const removeRightStrangerBtn = document.getElementById('remove-right-stranger-btn');
+        const addRightFoeBtn = document.getElementById('add-right-foe-btn');
+        const removeRightFoeBtn = document.getElementById('remove-right-foe-btn');
 
         const resetBtn = document.getElementById('reset-btn');
         const messageBox = document.getElementById('message-box');
@@ -390,7 +418,7 @@
             let leftHangerPos, rightHangerPos;
 
             const friendColor = '#3b82f6';
-            const strangerColor = '#ef4444';
+            const foeColor = '#ef4444';
             
             // --- Global Control Functions ---
             p.addWeight = (side, type) => {
@@ -402,7 +430,7 @@
                     restitution: 0.4, // Bounciness reduced
                     friction: 0.2, // A bit more friction
                     density: 0.1,
-                    label: type // 'friend' or 'stranger'
+                    label: type // 'friend' or 'foe'
                 });
                 weightBodies.push(body);
                 World.add(world, body);
@@ -514,10 +542,10 @@
                 if (leftFriends > rightFriends) angelSide = 'left';
                 else if (rightFriends > leftFriends) angelSide = 'right';
 
-                // Determine devil side based on stranger counts
+                // Determine devil side based on foe counts
                 let devilSide = 'center';
-                if (leftStrangers < rightStrangers) devilSide = 'left';
-                else if (rightStrangers < leftStrangers) devilSide = 'right';
+                if (leftFoes < rightFoes) devilSide = 'left';
+                else if (rightFoes < leftFoes) devilSide = 'right';
 
                 // --- Angel Legend Logic ---
                 let angelLegendX, angelIconY, angelTextY;
@@ -657,8 +685,8 @@
                 else if (rightFriends > leftFriends) angelX = hangerDist;
                 
                 let devilX = 0;
-                if (leftStrangers < rightStrangers) devilX = -hangerDist;
-                else if (rightStrangers < leftStrangers) devilX = hangerDist;
+                if (leftFoes < rightFoes) devilX = -hangerDist;
+                else if (rightFoes < leftFoes) devilX = hangerDist;
                 
                 if (angelX === devilX) { angelX -= 20; devilX += 20; }
                 
@@ -693,7 +721,7 @@
                     p.push();
                     p.translate(pos.x, pos.y);
                     p.rotate(p.degrees(angle));
-                    p.fill(body.label === 'friend' ? friendColor : strangerColor);
+                    p.fill(body.label === 'friend' ? friendColor : foeColor);
                     p.circle(0, 0, body.circleRadius * 2);
                     p.pop();
                 }
@@ -713,37 +741,59 @@
             
             // Profit bracket (blue '1-r') on the right
             profitBracketSvg.style.width = `${profitPercentage}%`;
+            
+            // Update arc label positions
+            updateArcLabels();
+        }
+        
+        function updateArcLabels() {
+            const costLabel = document.getElementById('cost-arc-label');
+            const profitLabel = document.getElementById('profit-arc-label');
+            
+            // Calculate positions based on resolution
+            const costPercentage = resolution * 100;
+            const profitPercentage = (1 - resolution) * 100;
+            
+            // Position cost label at the center of the red arc
+            const costLabelPosition = (costPercentage / 2);
+            costLabel.style.left = `${costLabelPosition}%`;
+            costLabel.style.transform = 'translateX(-50%)';
+            
+            // Position profit label at the center of the blue arc
+            const profitLabelPosition = costPercentage + (profitPercentage / 2);
+            profitLabel.style.left = `${profitLabelPosition}%`;
+            profitLabel.style.transform = 'translateX(-50%)';
         }
 
         function updatePanWeights() {
             const profit = (1 - resolution).toFixed(2);
             const cost = resolution.toFixed(2);
-            const leftWeight = leftFriends * (1 - resolution) - leftStrangers * resolution;
-            const rightWeight = rightFriends * (1 - resolution) - rightStrangers * resolution;
+            const leftWeight = leftFriends * (1 - resolution) - leftFoes * resolution;
+            const rightWeight = rightFriends * (1 - resolution) - rightFoes * resolution;
             
             // Update the main result display in controls
             controlLeftPanWeightEl.textContent = leftWeight.toFixed(2);
             controlRightPanWeightEl.textContent = rightWeight.toFixed(2);
             
             // Update the formula display in controls
-            const leftFormulaHTML = `(<span class="text-blue-400">${leftFriends}</span>&times;<span class="text-blue-400">${profit}</span>)&nbsp;-&nbsp;(<span class="text-red-400">${leftStrangers}</span>&times;<span class="text-red-400">${cost}</span>)`;
+            const leftFormulaHTML = `(<span class="text-blue-400">${leftFriends}</span>&times;<span class="text-blue-400">${profit}</span>)&nbsp;-&nbsp;(<span class="text-red-400">${leftFoes}</span>&times;<span class="text-red-400">${cost}</span>)`;
             controlLeftPanFormulaEl.innerHTML = leftFormulaHTML;
 
-            const rightFormulaHTML = `(<span class="text-blue-400">${rightFriends}</span>&times;<span class="text-blue-400">${profit}</span>)&nbsp;-&nbsp;(<span class="text-red-400">${rightStrangers}</span>&times;<span class="text-red-400">${cost}</span>)`;
+            const rightFormulaHTML = `(<span class="text-blue-400">${rightFriends}</span>&times;<span class="text-blue-400">${profit}</span>)&nbsp;-&nbsp;(<span class="text-red-400">${rightFoes}</span>&times;<span class="text-red-400">${cost}</span>)`;
             controlRightPanFormulaEl.innerHTML = rightFormulaHTML;
         }
 
         function updateProfitAndCost() {
             profitValueEl.previousSibling.textContent = translations[currentLanguage].profitPerFriend;
             profitValueEl.textContent = (1 - resolution).toFixed(2);
-            costValueEl.previousSibling.textContent = translations[currentLanguage].costPerStranger;
+            costValueEl.previousSibling.textContent = translations[currentLanguage].costPerFoe;
             costValueEl.textContent = resolution.toFixed(2);
         }
 
         function updateFamiliarityIndex() {
             const defaultSliderBg = '#4b5563'; // A neutral gray color
             const friendColor = '#3b82f6';
-            const strangerColor = '#ef4444';
+            const foeColor = '#ef4444';
 
             if (leftTotalWeight === 0 && rightTotalWeight === 0) {
                 familiarityDynamicContainer.classList.add('hidden');
@@ -753,7 +803,7 @@
             }
             
             const df = rightFriends - leftFriends;
-            const ds = rightStrangers - leftStrangers;
+            const ds = rightFoes - leftFoes;
             const sumDiff = df + ds;
 
             if (sumDiff === 0) {
@@ -771,7 +821,7 @@
                 } else if (index < 0) {
                     familiarityDynamicContainer.classList.add('hidden');
                     familiarityMarkerEl.classList.add('hidden');
-                    resolutionSlider.style.background = strangerColor; // Solid red
+                    resolutionSlider.style.background = foeColor; // Solid red
                 } else { // This handles the case where index is between 0 and 1
                     familiarityDynamicContainer.classList.remove('hidden');
                     familiarityMarkerEl.classList.remove('hidden');
@@ -781,26 +831,26 @@
                     familiarityDynamicContainer.style.left = markerPosition;
                     // Set slider background based on the familiarity index
                     const percentage = index * 100;
-                    resolutionSlider.style.background = `linear-gradient(to right, ${friendColor} ${percentage}%, ${strangerColor} ${percentage}%)`;
+                    resolutionSlider.style.background = `linear-gradient(to right, ${friendColor} ${percentage}%, ${foeColor} ${percentage}%)`;
                 }
             }
         }
 
         function updateScale() {
-            leftTotalWeight = leftFriends + leftStrangers;
-            rightTotalWeight = rightFriends + rightStrangers;
+            leftTotalWeight = leftFriends + leftFoes;
+            rightTotalWeight = rightFriends + rightFoes;
 
-            const leftWeight = leftFriends * (1 - resolution) - leftStrangers * resolution;
-            const rightWeight = rightFriends * (1 - resolution) - rightStrangers * resolution;
+            const leftWeight = leftFriends * (1 - resolution) - leftFoes * resolution;
+            const rightWeight = rightFriends * (1 - resolution) - rightFoes * resolution;
 
             const diff = rightWeight - leftWeight;
             const angle = diff * 3;
             p5Sketch.setTargetAngle(angle);
 
             controlLeftFriendsEl.textContent = leftFriends;
-            controlLeftStrangersEl.textContent = leftStrangers;
+            controlLeftFoesEl.textContent = leftFoes;
             controlRightFriendsEl.textContent = rightFriends;
-            controlRightStrangersEl.textContent = rightStrangers;
+            controlRightFoesEl.textContent = rightFoes;
 
             updatePanWeights();
             updateFamiliarityIndex();
@@ -808,9 +858,9 @@
 
         function addObject(side, type) {
             if (side === 'left') {
-                if (type === 'friend') leftFriends++; else leftStrangers++;
+                if (type === 'friend') leftFriends++; else leftFoes++;
             } else {
-                if (type === 'friend') rightFriends++; else rightStrangers++;
+                if (type === 'friend') rightFriends++; else rightFoes++;
             }
             p5Sketch.addWeight(side, type);
             updateScale();
@@ -820,10 +870,10 @@
             let canRemove = false;
              if (side === 'left') {
                 if (type === 'friend' && leftFriends > 0) { leftFriends--; canRemove = true; }
-                else if (type === 'stranger' && leftStrangers > 0) { leftStrangers--; canRemove = true; }
+                else if (type === 'foe' && leftFoes > 0) { leftFoes--; canRemove = true; }
             } else {
                 if (type === 'friend' && rightFriends > 0) { rightFriends--; canRemove = true; }
-                else if (type === 'stranger' && rightStrangers > 0) { rightStrangers--; canRemove = true; }
+                else if (type === 'foe' && rightFoes > 0) { rightFoes--; canRemove = true; }
             }
             
             if (canRemove) {
@@ -837,9 +887,9 @@
             leftTotalWeight = 0;
             rightTotalWeight = 0;
             leftFriends = 0;
-            leftStrangers = 0;
+            leftFoes = 0;
             rightFriends = 0;
-            rightStrangers = 0;
+            rightFoes = 0;
             resolution = 0.5;
             resolutionSlider.value = 0.5;
             updateProfitAndCost();
@@ -870,13 +920,8 @@
              document.querySelectorAll('[data-translate-tooltip]').forEach(el => {
                 const key = el.getAttribute('data-translate-tooltip');
                 if (langData[key]) {
-                    // This element is the container, find the span to set text
-                    const span = el.querySelector('span');
-                    if(span) {
-                       span.parentElement.dataset.tooltip = langData[key];
-                    } else {
-                        el.dataset.tooltip = langData[key];
-                    }
+                    // Set the tooltip on the element itself
+                    el.dataset.tooltip = langData[key];
                 }
             });
             
@@ -928,28 +973,40 @@
 
         addLeftFriendBtn.addEventListener('click', () => addObject('left', 'friend'));
         removeLeftFriendBtn.addEventListener('click', () => removeObject('left', 'friend'));
-        addLeftStrangerBtn.addEventListener('click', () => addObject('left', 'stranger'));
-        removeLeftStrangerBtn.addEventListener('click', () => removeObject('left', 'stranger'));
+        addLeftFoeBtn.addEventListener('click', () => addObject('left', 'foe'));
+        removeLeftFoeBtn.addEventListener('click', () => removeObject('left', 'foe'));
         
         addRightFriendBtn.addEventListener('click', () => addObject('right', 'friend'));
         removeRightFriendBtn.addEventListener('click', () => removeObject('right', 'friend'));
-        addRightStrangerBtn.addEventListener('click', () => addObject('right', 'stranger'));
-        removeRightStrangerBtn.addEventListener('click', () => removeObject('right', 'stranger'));
+        addRightFoeBtn.addEventListener('click', () => addObject('right', 'foe'));
+        removeRightFoeBtn.addEventListener('click', () => removeObject('right', 'foe'));
 
         resetBtn.addEventListener('click', resetScale);
 
         const tooltipTriggers = document.querySelectorAll('[data-translate-tooltip]');
         tooltipTriggers.forEach(trigger => {
             const positionTooltip = (e) => {
+                // Force a reflow to get accurate dimensions
+                tooltipEl.offsetHeight;
                 const tooltipRect = tooltipEl.getBoundingClientRect();
                 let x = e.clientX + 12;
                 let y = e.clientY + 12;
 
-                if (x + tooltipRect.width > window.innerWidth) {
+                // Check right boundary
+                if (x + tooltipRect.width > window.innerWidth - 20) {
                     x = e.clientX - tooltipRect.width - 12;
                 }
-                if (y + tooltipRect.height > window.innerHeight) {
+                // Check left boundary
+                if (x < 20) {
+                    x = 20;
+                }
+                // Check bottom boundary
+                if (y + tooltipRect.height > window.innerHeight - 20) {
                     y = e.clientY - tooltipRect.height - 12;
+                }
+                // Check top boundary
+                if (y < 20) {
+                    y = 20;
                 }
 
                 tooltipEl.style.left = `${x}px`;
@@ -957,10 +1014,23 @@
             };
 
             trigger.addEventListener('mouseenter', (e) => {
-                tooltipEl.innerHTML = trigger.dataset.tooltip; // Use innerHTML for multi-line
+                const tooltipText = trigger.dataset.tooltip;
+                tooltipEl.innerHTML = tooltipText; // Use innerHTML for multi-line
                 tooltipEl.style.opacity = '1';
                 // Initial position set on enter
                 positionTooltip(e);
+                // Process LaTeX if MathJax is available
+                if (window.MathJax && window.MathJax.typesetPromise) {
+                    // Use a small delay to ensure the tooltip is visible before processing
+                    setTimeout(() => {
+                        window.MathJax.typesetPromise([tooltipEl]).then(() => {
+                            // Reposition after MathJax has processed the content
+                            positionTooltip(e);
+                        }).catch((err) => {
+                            console.log('MathJax error:', err);
+                        });
+                    }, 10);
+                }
             });
 
             trigger.addEventListener('mouseleave', () => {
@@ -976,6 +1046,7 @@
         updateScale();
         updateProfitAndCost();
         updateBrackets();
+        updateArcLabels(); // Initialize arc label positions
         magnetIcon.classList.add('text-gray-500'); // Set initial magnet color
     </script>
 </body>
